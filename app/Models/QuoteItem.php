@@ -12,10 +12,11 @@ class QuoteItem extends Model
 {
     protected $guarded = [];
 
-    protected $casts = ['quantity' => 'decimal:2'];
+    protected $casts = [
+        'quantity' => 'decimal:2'
+    ];
 
-    protected static function booted(): void
-    {
+    protected static function booted(): void{
         $guard = function (QuoteItem $item) {
             if ($item->quote?->isLocked()) {
                 throw new DomainException('Un devis envoyé ne peut plus être modifié.');
@@ -30,10 +31,13 @@ class QuoteItem extends Model
         static::deleted(fn (QuoteItem $i) => $i->quote->recalculate());
     }
 
-    public function getTotalAttribute(): int
-    {
+    public function getTotalAttribute(): int{
+
         return (int) round((float) $this->quantity * $this->unit_price);
     }
 
-    public function quote(): BelongsTo { return $this->belongsTo(Quote::class); }
+    public function quote(): BelongsTo { 
+        
+        return $this->belongsTo(Quote::class); 
+    }
 }

@@ -1,66 +1,75 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
+use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\QuoteRequest;
-use App\Models\User;
-use Illuminate\Auth\Access\Response;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class QuoteRequestPolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
+    use HandlesAuthorization;
+    
+    public function viewAny(AuthUser $authUser): bool
     {
-        return false;
+        return $authUser->can('ViewAny:QuoteRequest');
     }
 
-    /**
-     * Determine whether the user can view the model.
-     */
-    public function view(User $user, QuoteRequest $quoteRequest): bool
+    public function view(AuthUser $authUser, QuoteRequest $quoteRequest): bool
     {
-        return false;
+        return $authUser->can('View:QuoteRequest');
     }
 
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
+    public function create(AuthUser $authUser): bool
     {
-        return false;
+        return $authUser->can('Create:QuoteRequest');
     }
 
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, QuoteRequest $quoteRequest): bool
+    public function update(AuthUser $authUser, QuoteRequest $quoteRequest): bool
     {
-        return false;
+        return $authUser->can('Update:QuoteRequest');
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, QuoteRequest $quoteRequest): bool
+    public function delete(AuthUser $authUser, QuoteRequest $quoteRequest): bool
     {
-        return false;
+        return $authUser->can('Delete:QuoteRequest');
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, QuoteRequest $quoteRequest): bool
+    public function deleteAny(AuthUser $authUser): bool
     {
-        return false;
+        return $authUser->can('DeleteAny:QuoteRequest');
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, QuoteRequest $quoteRequest): bool
+    public function restore(AuthUser $authUser, QuoteRequest $quoteRequest): bool
     {
-        return false;
+        return $authUser->can('Restore:QuoteRequest');
     }
+
+    public function forceDelete(AuthUser $authUser, QuoteRequest $quoteRequest): bool
+    {
+        return $authUser->can('ForceDelete:QuoteRequest');
+    }
+
+    public function forceDeleteAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('ForceDeleteAny:QuoteRequest');
+    }
+
+    public function restoreAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('RestoreAny:QuoteRequest');
+    }
+
+    public function replicate(AuthUser $authUser, QuoteRequest $quoteRequest): bool
+    {
+        return $authUser->can('Replicate:QuoteRequest');
+    }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:QuoteRequest');
+    }
+
 }

@@ -18,20 +18,33 @@ class Client extends Model
 
     protected $casts = ['type' => ClientType::class];
 
-    public function getActivitylogOptions(): LogOptions
-    {
+    public function getActivitylogOptions(): LogOptions{
         return LogOptions::defaults()->logAll()->logOnlyDirty();
     }
 
-    public function getDisplayNameAttribute(): string
-    {
+    public function getDisplayNameAttribute(): string{
         return $this->company_name ?: $this->contact_name;
     }
 
-    public function user(): BelongsTo { return $this->belongsTo(User::class); }
-    public function quoteRequests(): HasMany { return $this->hasMany(QuoteRequest::class); }
-    public function quotes(): HasMany { return $this->hasMany(Quote::class); }
-    public function projects(): HasMany { return $this->hasMany(Project::class); }
-    public function interventions(): HasMany { return $this->hasMany(Intervention::class); }
-    public function documents(): HasMany { return $this->hasMany(Document::class); }
+    public function user(): BelongsTo { 
+        return $this->belongsTo(User::class); 
+    }
+    protected static function booted(): void{
+        static::deleted(fn (Client $c) => $c->user?->update(['is_active' => false]));
+    }
+    public function quoteRequests(): HasMany { 
+        return $this->hasMany(QuoteRequest::class); 
+    }
+    public function quotes(): HasMany { 
+        return $this->hasMany(Quote::class);
+    }
+    public function projects(): HasMany { 
+        return $this->hasMany(Project::class); 
+    }
+    public function interventions(): HasMany { 
+        return $this->hasMany(Intervention::class); 
+    }
+    public function documents(): HasMany { 
+        return $this->hasMany(Document::class); 
+    }
 }

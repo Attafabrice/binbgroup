@@ -9,14 +9,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
-use Spatie\Activitylog\Models\Concerns\LogsActivity;
-use Spatie\Activitylog\Support\LogOptions;
 
 class User extends Authenticatable implements FilamentUser
 {
     use Notifiable, HasRoles, SoftDeletes;
 
-    protected $fillable = ['name', 'email', 'phone', 'password', 'is_active'];
+    /** Rôles autorisés dans /admin. */
+    public const STAFF_ROLES = ['super_admin', 'admin', 'chef_projet', 'commercial', 'technicien'];
+
+    protected $fillable = [
+        'name', 
+        'email', 
+        'phone', 
+        'password', 
+        'is_active'
+    ];
 
     protected $hidden = ['password', 'remember_token'];
 
@@ -29,14 +36,27 @@ class User extends Authenticatable implements FilamentUser
         ];
     }
 
-    public function client(): HasOne {
-        return $this->hasOne(Client::class); 
+    public function client(): HasOne{
+        return $this->hasOne(Client::class);
     }
 
-    public function isStaff(): bool { return ! $this->client()->exists(); }
+    public function isClient(): bool{
+        return $this->hasRole('client');
+    }
 
-    public function canAccessPanel(Panel $panel): bool
-    {
-        return $this->is_active && $this->isStaff();
+    public function isStaff(): bool{
+        return ! $this->isClient() && $this->hasAnyRole(self::STAFF_ROLES);
+    }
+
+    public function canAccessPanel(Panel $panel): bool{
+        if (! $this->is_active) {
+            return false;
+        }
+
+        return match ($panel->getId()) {
+            'admin' => $this->isStaff(),
+            'client' => $this->isClient(),
+            default => false,
+        };
     }
 }

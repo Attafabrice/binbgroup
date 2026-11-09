@@ -27,8 +27,7 @@ class Document extends Model
         'visible_at'           => 'datetime',
     ];
 
-    protected static function booted(): void
-    {
+    protected static function booted(): void{
         static::creating(function (Document $d) {
             $d->client_id ??= match (true) {
                 $d->documentable instanceof Client => $d->documentable->id,
@@ -43,17 +42,21 @@ class Document extends Model
         });
     }
 
-    public function scopeVisibleToClient(Builder $q): Builder
-    {
+    public function scopeVisibleToClient(Builder $q): Builder{
         return $q->where('is_visible_to_client', true);
     }
 
-    public function download(): StreamedResponse
-    {
+    public function download(): StreamedResponse{
         return Storage::disk($this->disk)->download($this->file_path, $this->original_name);
     }
 
-    public function documentable(): MorphTo { return $this->morphTo(); }
-    public function client(): BelongsTo { return $this->belongsTo(Client::class); }
-    public function uploader(): BelongsTo { return $this->belongsTo(User::class, 'uploaded_by'); }
+    public function documentable(): MorphTo { 
+        return $this->morphTo(); 
+    }
+    public function client(): BelongsTo { 
+        return $this->belongsTo(Client::class); 
+    }
+    public function uploader(): BelongsTo { 
+        return $this->belongsTo(User::class, 'uploaded_by'); 
+    }
 }
