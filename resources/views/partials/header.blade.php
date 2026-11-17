@@ -15,10 +15,16 @@
                 <li><a class="nav-link" href="{{ route('home') }}#services">Services</a></li>
                 <li><a class="nav-link" href="{{ route('home') }}#realisations">Réalisations</a></li>
                 <li><a class="nav-link" href="{{ route('home') }}#equipe">Équipe</a></li>
-                @auth
-                    <li><a class="nav-link" href="{{ route('client.dashboard') }}">Mon espace</a></li>
+               @auth
+                    @php $u = auth()->user(); @endphp
+                    <li>
+                        <a class="nav-link" href="{{ $u->isStaff() ? route('admin.dashboard') : route('client.dashboard') }}">
+                            {{ $u->isStaff() ? 'Administration' : 'Mon espace' }}
+                        </a>
+                    </li>
                 @else
                     <li><a class="nav-link" href="{{ route('login') }}">Connexion</a></li>
+                    <li><a class="nav-link" href="{{ route('register') }}">S'inscrire</a></li>
                 @endauth
             </ul>
             <a href="{{ route('home') }}#contact" class="btn btn-primary nav-cta">Nous contacter</a>

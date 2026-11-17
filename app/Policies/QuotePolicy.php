@@ -1,75 +1,49 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Policies;
 
-use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\Quote;
-use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Models\User;
 
 class QuotePolicy
 {
-    use HandlesAuthorization;
-    
-    public function viewAny(AuthUser $authUser): bool
+    /**
+     * Détermine si l'utilisateur peut voir la liste des devis.
+     */
+    public function viewAny(User $u): bool
     {
-        return $authUser->can('ViewAny:Quote');
+        return $u->can('view_quote');
     }
 
-    public function view(AuthUser $authUser, Quote $quote): bool
+    /**
+     * Détermine si l'utilisateur peut voir un devis spécifique.
+     */
+    public function view(User $u, Quote $q): bool
     {
-        return $authUser->can('View:Quote');
+        return $u->can('view_quote');
     }
 
-    public function create(AuthUser $authUser): bool
+    /**
+     * Détermine si l'utilisateur peut modifier un devis.
+     */
+    public function update(User $u, Quote $q): bool
     {
-        return $authUser->can('Create:Quote');
+        return $u->can('update_quote');
     }
 
-    public function update(AuthUser $authUser, Quote $quote): bool
+    /**
+     * Détermine si l'utilisateur peut envoyer un devis au client.
+     */
+    public function send(User $u, Quote $q): bool
     {
-        return $authUser->can('Update:Quote');
+        return $u->can('send_quote');
     }
 
-    public function delete(AuthUser $authUser, Quote $quote): bool
+    /**
+     * Détermine si l'utilisateur peut accepter un devis hors ligne.
+     */
+    public function acceptOffline(User $u, Quote $q): bool
     {
-        return $authUser->can('Delete:Quote');
+        return $u->can('accept_offline_quote');
     }
-
-    public function deleteAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('DeleteAny:Quote');
-    }
-
-    public function restore(AuthUser $authUser, Quote $quote): bool
-    {
-        return $authUser->can('Restore:Quote');
-    }
-
-    public function forceDelete(AuthUser $authUser, Quote $quote): bool
-    {
-        return $authUser->can('ForceDelete:Quote');
-    }
-
-    public function forceDeleteAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('ForceDeleteAny:Quote');
-    }
-
-    public function restoreAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('RestoreAny:Quote');
-    }
-
-    public function replicate(AuthUser $authUser, Quote $quote): bool
-    {
-        return $authUser->can('Replicate:Quote');
-    }
-
-    public function reorder(AuthUser $authUser): bool
-    {
-        return $authUser->can('Reorder:Quote');
-    }
-
 }

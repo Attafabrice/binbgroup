@@ -1,75 +1,51 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Policies;
 
-use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\Project;
-use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Models\User;
 
 class ProjectPolicy
 {
-    use HandlesAuthorization;
-    
-    public function viewAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('ViewAny:Project');
+    /**
+     * Détermine si l'utilisateur peut voir la liste des projets.
+     */
+    public function viewAny(User $u): bool{
+        return $u->can('view_project');
     }
 
-    public function view(AuthUser $authUser, Project $project): bool
-    {
-        return $authUser->can('View:Project');
+    /**
+     * Détermine si l'utilisateur peut voir un projet spécifique.
+     */
+    public function view(User $u, Project $p): bool{
+        return $u->can('view_project');
     }
 
-    public function create(AuthUser $authUser): bool
-    {
-        return $authUser->can('Create:Project');
+    /**
+     * Détermine si l'utilisateur peut modifier un projet.
+     */
+    public function update(User $u, Project $p): bool{
+        return $u->can('update_project');
     }
 
-    public function update(AuthUser $authUser, Project $project): bool
-    {
-        return $authUser->can('Update:Project');
+    /**
+     * Détermine si l'utilisateur peut gérer les étapes d'un projet.
+     */
+    public function manageSteps(User $u, Project $p): bool{
+        return $u->can('manage_steps_project');
+    }
+    /**
+     * Détermine si l'utilisateur peut publier des mises à jour sur un projet.
+     */
+    public function publishUpdate(User $u, Project $p): bool{
+        return $u->can('publish_update_project');
     }
 
-    public function delete(AuthUser $authUser, Project $project): bool
-    {
-        return $authUser->can('Delete:Project');
-    }
-
-    public function deleteAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('DeleteAny:Project');
-    }
-
-    public function restore(AuthUser $authUser, Project $project): bool
-    {
-        return $authUser->can('Restore:Project');
-    }
-
-    public function forceDelete(AuthUser $authUser, Project $project): bool
-    {
-        return $authUser->can('ForceDelete:Project');
-    }
-
-    public function forceDeleteAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('ForceDeleteAny:Project');
-    }
-
-    public function restoreAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('RestoreAny:Project');
-    }
-
-    public function replicate(AuthUser $authUser, Project $project): bool
-    {
-        return $authUser->can('Replicate:Project');
-    }
-
-    public function reorder(AuthUser $authUser): bool
-    {
-        return $authUser->can('Reorder:Project');
+    /**
+     * Détermine si l'utilisateur peut gérer les photos d'un projet.
+     */
+    public function managePhotos(User $u, Project $p): bool{
+        return $u->can('manage_photos_project');
     }
 
 }

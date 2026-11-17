@@ -1,0 +1,456 @@
+/* =========================================================
+   1. Variables
+   ========================================================= */
+:root {
+    --c-primary: #2563eb;
+    --c-primary-dark: #1d4ed8;
+    --c-bg: #f3f4f6;
+    --c-surface: #fff;
+    --c-text: #111827;
+    --c-muted: #6b7280;
+    --c-border: #e5e7eb;
+    --c-danger: #dc2626;
+    --c-success: #16a34a;
+    --radius: 8px;
+    --sidebar-w: 240px;
+}
+
+/* =========================================================
+   2. Reset
+   ========================================================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/* =========================================================
+   3. Base
+   ========================================================= */
+body {
+    font-family: system-ui, sans-serif;
+    background: var(--c-bg);
+    color: var(--c-text);
+    line-height: 1.5;
+}
+
+/* =========================================================
+   4. Layout
+   ========================================================= */
+.shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: var(--sidebar-w);
+    background: #111827;
+    color: #fff;
+    padding: 1.25rem 0;
+    flex-shrink: 0;
+}
+
+.brand {
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0 1.25rem 1.25rem;
+}
+
+.sidebar nav a {
+    display: block;
+    padding: .6rem 1.25rem;
+    color: #d1d5db;
+    text-decoration: none;
+}
+
+.sidebar nav a:hover,
+.sidebar nav a.active {
+    background: #1f2937;
+    color: #fff;
+}
+
+.main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--c-surface);
+    border-bottom: 1px solid var(--c-border);
+    padding: .75rem 1.5rem;
+}
+
+.topbar-user {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    color: var(--c-muted);
+}
+
+.content {
+    padding: 1.5rem;
+}
+
+/* =========================================================
+   5. Composants
+   ========================================================= */
+.card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+}
+
+/* --- Boutons --- */
+.btn {
+    display: inline-block;
+    border: 0;
+    border-radius: var(--radius);
+    padding: .55rem 1rem;
+    font: inherit;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--c-primary);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: var(--c-primary-dark);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--c-muted);
+    border: 1px solid var(--c-border);
+}
+
+/* --- Alertes --- */
+.alert {
+    padding: .75rem 1rem;
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+}
+
+.alert-success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.alert-danger {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* =========================================================
+   6. Formulaires
+   ========================================================= */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: .25rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: .55rem .75rem;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    font: inherit;
+}
+
+input:focus {
+    outline: 2px solid var(--c-primary);
+    outline-offset: -1px;
+}
+
+.error {
+    color: var(--c-danger);
+    font-size: .875rem;
+    margin-top: .25rem;
+}
+
+.check {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: var(--c-muted);
+}
+
+/* =========================================================
+   7. Auth
+   ========================================================= */
+.auth-body {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 380px;
+}
+
+.auth-card h1 {
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+}
+
+.auth-card .btn {
+    width: 100%;
+}.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    text-align: left;
+    padding: .6rem .75rem;
+    border-bottom: 1px solid var(--c-border);
+}
+
+.actions,
+.inline-form,
+.tags {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.badge {
+    display: inline-flex;
+    gap: .35rem;
+    align-items: center;
+    background: #e0e7ff;
+    color: #3730a3;
+    padding: .2rem .6rem;
+    border-radius: 999px;
+    font-size: .85rem;
+}
+
+.badge .x {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    color: inherit;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.perm-group {
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    padding: .75rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.perm-group legend {
+    font-weight: 600;
+    padding: 0 .4rem;
+}
+
+.perm-group .check {
+    display: inline-flex;
+    margin: 0 1rem .25rem 0;
+}
+
+select {
+    padding: .5rem;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    font: inherit;
+}
+
+h3 {
+    margin-bottom: .75rem;
+}/* =========================================================
+   Grilles
+   ========================================================= */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 800px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   Typographie
+   ========================================================= */
+.muted {
+    color: var(--c-muted);
+    font-size: .9rem;
+}
+
+/* =========================================================
+   Formulaires
+   ========================================================= */
+textarea {
+    width: 100%;
+    padding: .55rem .75rem;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    font: inherit;
+}
+
+/* =========================================================
+   Boutons
+   ========================================================= */
+.btn-danger {
+    background: var(--c-danger);
+    color: #fff;
+}
+
+/* =========================================================
+   Badges
+   ========================================================= */
+.badge-gray {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.badge-primary {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.badge-success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.badge-danger {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.badge-warning {
+    background: #fef3c7;
+    color: #92400e;
+}/* =========================================================
+   Totaux
+   ========================================================= */
+.totals {
+    text-align: right;
+    margin-top: 1rem;
+}
+
+/* =========================================================
+   Formulaires
+   ========================================================= */
+input[type="date"],
+input[type="number"] {
+    padding: .55rem .75rem;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    font: inherit;
+}
+/* =========================================================
+   Barres de progression
+   ========================================================= */
+.progress {
+    display: inline-block;
+    vertical-align: middle;
+    width: 120px;
+    height: 8px;
+    background: var(--c-border);
+    border-radius: 99px;
+    overflow: hidden;
+}
+
+.progress span {
+    display: block;
+    height: 100%;
+    background: var(--c-primary);
+}
+
+.card > .progress {
+    display: block;
+    width: 100%;
+}
+.step-done td { 
+    background: #f9fafb; color: var(--c-muted); 
+}
+.step-done td:first-child { 
+    text-decoration: line-through; 
+}/* =========================================================
+   Journal du chantier
+   ========================================================= */
+.entry {
+    border-top: 1px solid var(--c-border);
+    padding: .75rem 0;
+}
+
+/* =========================================================
+   Grille de photos
+   ========================================================= */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 1rem;
+}
+
+.photo img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--c-border);
+}
+
+/* =========================================================
+   Éléments dépliables (details/summary)
+   ========================================================= */
+details summary {
+    cursor: pointer;
+    color: var(--c-primary);
+    font-size: .9rem;
+}
+/* =========================================================
+   Formulaires : Select
+   ========================================================= */
+.form-group select {
+    width: 100%;
+    padding: .65rem .85rem;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    font: inherit;
+    font-size: .95rem;
+    background: #fff;
+}
+
+.form-group select:focus {
+    outline: none;
+    border-color: var(--c-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* =========================================================
+   Honeypot (champ anti-spam invisible)
+   ========================================================= */
+.hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}

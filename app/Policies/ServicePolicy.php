@@ -1,75 +1,45 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Policies;
 
-use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\Service;
-use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Models\User;
 
 class ServicePolicy
 {
-    use HandlesAuthorization;
-    
-    public function viewAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('ViewAny:Service');
+    /**
+     * Détermine si l'utilisateur peut voir la liste des services.
+     */
+    public function viewAny(User $u): bool{
+        return $u->can('view_service');
     }
 
-    public function view(AuthUser $authUser, Service $service): bool
+    /**
+     * Détermine si l'utilisateur peut voir un service spécifique.
+     */
+    public function view(User $u, Service $s): bool
     {
-        return $authUser->can('View:Service');
+        return $u->can('view_service');
     }
 
-    public function create(AuthUser $authUser): bool
-    {
-        return $authUser->can('Create:Service');
+    /**
+     * Détermine si l'utilisateur peut créer un service.
+     */
+    public function create(User $u): bool{
+        return $u->can('create_service');
     }
 
-    public function update(AuthUser $authUser, Service $service): bool
-    {
-        return $authUser->can('Update:Service');
+    /**
+     * Détermine si l'utilisateur peut modifier un service.
+     */
+    public function update(User $u, Service $s): bool{
+        return $u->can('update_service');
     }
 
-    public function delete(AuthUser $authUser, Service $service): bool
-    {
-        return $authUser->can('Delete:Service');
+    /**
+     * Détermine si l'utilisateur peut supprimer un service.
+     */
+    public function delete(User $u, Service $s): bool{
+        return $u->can('delete_service');
     }
-
-    public function deleteAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('DeleteAny:Service');
-    }
-
-    public function restore(AuthUser $authUser, Service $service): bool
-    {
-        return $authUser->can('Restore:Service');
-    }
-
-    public function forceDelete(AuthUser $authUser, Service $service): bool
-    {
-        return $authUser->can('ForceDelete:Service');
-    }
-
-    public function forceDeleteAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('ForceDeleteAny:Service');
-    }
-
-    public function restoreAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('RestoreAny:Service');
-    }
-
-    public function replicate(AuthUser $authUser, Service $service): bool
-    {
-        return $authUser->can('Replicate:Service');
-    }
-
-    public function reorder(AuthUser $authUser): bool
-    {
-        return $authUser->can('Reorder:Service');
-    }
-
 }

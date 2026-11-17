@@ -1,75 +1,34 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Policies;
 
-use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\QuoteRequest;
-use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Models\User;
 
 class QuoteRequestPolicy
 {
-    use HandlesAuthorization;
-    
-    public function viewAny(AuthUser $authUser): bool
+    public function viewAny(User $u): bool
     {
-        return $authUser->can('ViewAny:QuoteRequest');
+        return $u->can('view_quote_request');
     }
 
-    public function view(AuthUser $authUser, QuoteRequest $quoteRequest): bool
+    public function view(User $u, QuoteRequest $r): bool
     {
-        return $authUser->can('View:QuoteRequest');
+        return $u->can('view_quote_request');
     }
 
-    public function create(AuthUser $authUser): bool
+    public function take(User $u, QuoteRequest $r): bool
     {
-        return $authUser->can('Create:QuoteRequest');
+        return $u->can('take_quote_request');
     }
 
-    public function update(AuthUser $authUser, QuoteRequest $quoteRequest): bool
+    public function accept(User $u, QuoteRequest $r): bool
     {
-        return $authUser->can('Update:QuoteRequest');
+        return $u->can('accept_quote_request');
     }
 
-    public function delete(AuthUser $authUser, QuoteRequest $quoteRequest): bool
+    public function reject(User $u, QuoteRequest $r): bool
     {
-        return $authUser->can('Delete:QuoteRequest');
+        return $u->can('reject_quote_request');
     }
-
-    public function deleteAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('DeleteAny:QuoteRequest');
-    }
-
-    public function restore(AuthUser $authUser, QuoteRequest $quoteRequest): bool
-    {
-        return $authUser->can('Restore:QuoteRequest');
-    }
-
-    public function forceDelete(AuthUser $authUser, QuoteRequest $quoteRequest): bool
-    {
-        return $authUser->can('ForceDelete:QuoteRequest');
-    }
-
-    public function forceDeleteAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('ForceDeleteAny:QuoteRequest');
-    }
-
-    public function restoreAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('RestoreAny:QuoteRequest');
-    }
-
-    public function replicate(AuthUser $authUser, QuoteRequest $quoteRequest): bool
-    {
-        return $authUser->can('Replicate:QuoteRequest');
-    }
-
-    public function reorder(AuthUser $authUser): bool
-    {
-        return $authUser->can('Reorder:QuoteRequest');
-    }
-
 }
