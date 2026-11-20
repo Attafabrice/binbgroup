@@ -4,7 +4,6 @@
             <svg class="logo-mark"><use href="#logo-mark"/></svg>
             <span class="logo-text">
                 <span class="logo-name">BinB' <span>group</span></span>
-                <!-- <span class="logo-tagline">Immobilier | Import-Export | E-commerce</span> -->
             </span>
         </a>
 
@@ -15,11 +14,21 @@
                 <li><a class="nav-link" href="{{ route('home') }}#services">Services</a></li>
                 <li><a class="nav-link" href="{{ route('home') }}#realisations">Réalisations</a></li>
                 <li><a class="nav-link" href="{{ route('home') }}#equipe">Équipe</a></li>
-               @auth
-                    @php $u = auth()->user(); @endphp
+
+                @auth
+                    @php
+                        $u = auth()->user();
+                        $home = $u->isStaff() ? route('admin.dashboard') : route('client.dashboard');
+                        $label = $u->isStaff() ? 'Administration' : 'Mon espace';
+                    @endphp
                     <li>
-                        <a class="nav-link" href="{{ $u->isStaff() ? route('admin.dashboard') : route('client.dashboard') }}">
-                            {{ $u->isStaff() ? 'Administration' : 'Mon espace' }}
+                        <a class="nav-link nav-account" href="{{ $home }}" title="{{ $label }}" aria-label="{{ $label }}">
+                            @if ($u->avatar_url)
+                                <img class="avatar" src="{{ $u->avatar_url }}" alt="">
+                            @else
+                                <span class="avatar" aria-hidden="true">{{ $u->initials }}</span>
+                            @endif
+                            <span class="nav-account-label">{{ $label }}</span>
                         </a>
                     </li>
                 @else

@@ -1,75 +1,45 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Policies;
 
-use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\Client;
-use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Models\User;
 
 class ClientPolicy
 {
-    use HandlesAuthorization;
-    
-    public function viewAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('ViewAny:Client');
+    /**
+     * Détermine si l'utilisateur peut voir la liste des clients.
+     */
+    public function viewAny(User $u): bool{
+        return $u->can('view_client');
     }
 
-    public function view(AuthUser $authUser, Client $client): bool
+    /**
+     * Détermine si l'utilisateur peut voir un client spécifique.
+     */
+    public function view(User $u, Client $c): bool
     {
-        return $authUser->can('View:Client');
+        return $u->can('view_client');
     }
 
-    public function create(AuthUser $authUser): bool
-    {
-        return $authUser->can('Create:Client');
+    /**
+     * Détermine si l'utilisateur peut modifier un client.
+     */
+    public function update(User $u, Client $c): bool{
+        return $u->can('update_client');
     }
 
-    public function update(AuthUser $authUser, Client $client): bool
-    {
-        return $authUser->can('Update:Client');
+    /**
+     * Détermine si l'utilisateur peut gérer le compte d'un client.
+     */
+    public function manageAccount(User $u, Client $c): bool{
+        return $u->can('manage_account_client');
     }
 
-    public function delete(AuthUser $authUser, Client $client): bool
-    {
-        return $authUser->can('Delete:Client');
+    /**
+     * Détermine si l'utilisateur peut supprimer un client.
+     */
+    public function delete(User $u, Client $c): bool{
+        return $u->can('delete_client');
     }
-
-    public function deleteAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('DeleteAny:Client');
-    }
-
-    public function restore(AuthUser $authUser, Client $client): bool
-    {
-        return $authUser->can('Restore:Client');
-    }
-
-    public function forceDelete(AuthUser $authUser, Client $client): bool
-    {
-        return $authUser->can('ForceDelete:Client');
-    }
-
-    public function forceDeleteAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('ForceDeleteAny:Client');
-    }
-
-    public function restoreAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('RestoreAny:Client');
-    }
-
-    public function replicate(AuthUser $authUser, Client $client): bool
-    {
-        return $authUser->can('Replicate:Client');
-    }
-
-    public function reorder(AuthUser $authUser): bool
-    {
-        return $authUser->can('Reorder:Client');
-    }
-
 }

@@ -74,6 +74,13 @@ class QuoteRequestController extends Controller
 
             return $qr;
         });
+        
+        \App\Support\TeamNotifier::send(new \App\Notifications\TeamAlert(
+            'Nouvelle demande '.$qr->reference,
+            $client->display_name.' · '.$service->name,
+            route('admin.quote-requests.show', $qr)
+        ), ['super_admin', 'admin', 'commercial']);
+
         return redirect()->route('client.requests.show', $qr)
             ->with('success', "Votre demande {$qr->reference} a bien été envoyée. Nous revenons vers vous rapidement.");
     }

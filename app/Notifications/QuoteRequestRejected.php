@@ -23,7 +23,7 @@ class QuoteRequestRejected extends Notification
             ->line("Nous avons étudié votre demande de devis **{$r->reference}** pour le service **{$r->service->name}**. Nous sommes au regret de ne pas pouvoir y donner suite.")
             ->line('Motif : '.$r->decision_note)
             ->line("Vous pouvez nous contacter pour en discuter ou déposer une nouvelle demande depuis votre espace client.")
-            ->action('Accéder à mon espace', url('/espace-client/demandes/'.$r->id))
+            ->action('Accéder à mon espace', route('client.requests.show', $r))
             ->salutation("L'équipe BinB' group");
     }
 }

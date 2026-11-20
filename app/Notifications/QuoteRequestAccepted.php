@@ -30,7 +30,7 @@ class QuoteRequestAccepted extends Notification
         }
 
         return $mail
-            ->action('Suivre ma demande', url('/espace-client/demandes/'.$r->id))
+            ->action('Suivre ma demande', route('client.requests.show', $r))
             ->salutation("L'équipe BinB' group");
     }
 }

@@ -14,7 +14,16 @@ class EnsureStaff
      * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response{
-        abort_unless($request->user()?->isStaff(), 403);
+        $u = $request->user();
+
+        if ($u && ! $u->is_active) {
+            \Illuminate\Support\Facades\Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect()->route('login')->withErrors(['email' => 'Compte désactivé. Contactez-nous.']);
+        }
+
+        abort_unless($u?->isStaff(), 403);
         return $next($request);
     }
 }

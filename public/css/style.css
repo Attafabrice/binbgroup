@@ -1610,3 +1610,39 @@ html:not(.js) .services-tabs {
         width: 100%;
     }
 }
+/* ==========================================================================
+   18. Compte connecté dans l'en-tête
+   ========================================================================== */
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--primary-color);
+    color: #fff;
+    font-size: .8125rem;
+    font-weight: 600;
+    line-height: 1;
+    border: 2px solid transparent;
+    transition: border-color var(--transition);
+}
+
+.nav-link.nav-account {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    padding: 0;
+}
+
+.nav-link.nav-account::after { display: none; }
+.nav-link.nav-account:hover .avatar { border-color: var(--primary-color); }
+.nav-account-label { display: none; }
+
+@media (max-width: 1024px) {
+    .nav-link.nav-account { display: flex; padding: 16px 0; }
+    .nav-account-label { display: inline; }
+}
